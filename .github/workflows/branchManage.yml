@@ -27,8 +27,8 @@ jobs:
           java-version: '11'
  
       # 파일 실행 권한
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
- 
-      - name: Test with Gradle
-        run: ./gradlew --info test
+      - name: Run the Maven verify phase
+        # update-snapshots : cache된 것을 사용하지 않도록 해줌.
+        # verify : intergration test. unit test 쓸거면 test쓰라고 하긴 하는데 뭔가 둘 다 할 거 같으면 verify
+        # batch-mode : it will for example suppress upload messages to avoid polluting the console log.
+        run: mvn --batch-mode --update-snapshots verify
