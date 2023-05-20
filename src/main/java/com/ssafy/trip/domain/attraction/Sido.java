@@ -2,7 +2,6 @@ package com.ssafy.trip.domain.attraction;
 
 import com.ssafy.trip.exception.InvalidAttractionAttributeException;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
 public class Sido {
