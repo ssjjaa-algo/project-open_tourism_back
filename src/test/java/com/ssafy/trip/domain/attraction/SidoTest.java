@@ -1,4 +1,4 @@
-package com.ssafy.trip.dto.request;
+package com.ssafy.trip.domain.attraction;
 
 import com.ssafy.trip.exception.InvalidAttractionAttributeException;
 import org.junit.jupiter.api.DisplayName;
@@ -10,31 +10,30 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
-class AttractionRequestDtoTest {
+class SidoTest {
 
-    @CsvSource(value = {"-1:1:1", "1:-1:1", "1:1:-1"}, delimiter = ':')
+    @CsvSource(value = {"-1,제주", "1,", "1, "})
     @ParameterizedTest
     @DisplayName("잘못된 입력이 들어오면 InvalidAttractionAttributeException을 반환한다.")
-    public void invalidInput(int sido, int gugun, int type) {
+    public void invalidSidoInput(int sidoCode, String sidoName) {
         //given
-
         //when //then
-        assertThatThrownBy(() -> new AttractionRequestDto(sido, gugun, type))
+        assertThatThrownBy(() -> new Sido(sidoCode, sidoName))
                 .isInstanceOf(InvalidAttractionAttributeException.class);
     }
 
     @Test
     @DisplayName("적절한 입력시 객체를 생성")
-    public void validInput() {
+    public void validSidoInput() {
         //given
-        int sido = 1,gugun=2,type=3;
+        int sidoCode = 1;
+        String sidoName="제주";
 
         //when
-        AttractionRequestDto attractionRequestDto = new AttractionRequestDto(sido, gugun, type);
+        Sido sido = new Sido(sidoCode, sidoName);
 
         // then
-        assertThat(attractionRequestDto.getSidoCode()).isEqualTo(sido);
-        assertThat(attractionRequestDto.getGugunCode()).isEqualTo(gugun);
-        assertThat(attractionRequestDto.getContentTypeId()).isEqualTo(type);
+        assertThat(sido.getSidoCode()).isEqualTo(sidoCode);
+        assertThat(sido.getSidoName()).isEqualTo(sidoName);
     }
 }
