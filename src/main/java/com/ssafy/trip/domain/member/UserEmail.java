@@ -15,9 +15,9 @@ public class UserEmail {
     }
 
     private void validation(final String userEmail) {
-        if (!USEREMAIL_PATTERN.matcher(userEmail).matches()) {
-            throw new InvalidRegistException("이메일 형식이 맞지 않습니다.");
-        }
+//        if (!USEREMAIL_PATTERN.matcher(userEmail).matches()) {
+//            throw new InvalidRegistException("이메일 형식이 맞지 않습니다.");
+//        }
     }
 
 }

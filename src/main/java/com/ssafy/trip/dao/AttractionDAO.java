@@ -3,7 +3,7 @@ package com.ssafy.trip.dao;
 import com.ssafy.trip.domain.attraction.Attraction;
 import com.ssafy.trip.domain.attraction.Gugun;
 import com.ssafy.trip.domain.attraction.Sido;
-import com.ssafy.trip.dto.request.dto.AttractionRequestDto;
+import com.ssafy.trip.dto.request.AttractionRequestDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
