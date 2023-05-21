@@ -5,6 +5,35 @@
 
 <mapper namespace="com.ssafy.trip.dao.AttractionDAO">
     <select id="selectAllSido" resultType="sido">
-        select * from sido
+        select *
+        from sido
+    </select>
+    <select id="selectGugun" resultType="gugun">
+        select *
+        from gugun
+        where sido_code = #{sidoCode}
+    </select>
+    <select id="selectAttractions" parameterType="attractionRequestDto"
+            resultType="attraction">
+        SELECT
+        latitude,
+        longitude,
+        title,
+        addr1 as address1,
+        addr2 as address2,
+        first_image as first_image1,
+        first_image2 as first_image2
+        FROM attraction_info
+        WHERE 1=1
+        <if test="sidoCode != 0">
+            AND sido_code = #{sidoCode}
+        </if>
+        <if test="gugunCode != 0">
+            AND gugun_code = #{gugunCode}
+        </if>
+        <if test="contentTypeId != 0">
+            AND content_type_id = #{contentTypeId}
+        </if>
+        limit 10;
     </select>
 </mapper>
