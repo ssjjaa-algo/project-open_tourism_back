@@ -12,20 +12,18 @@ public class Member {
 
     @NonNull
     private String userId;
-    @NonNull
+
     private String userPwd; // 유효성
     @NonNull
     private String userName; // 유효성
     @NonNull
     private String userEmail; // 유효성
-    @NonNull
     private int countFail;
-    @NonNull
     private String refrshToken;
 
     // 유효성 검사 위한 userid, useremail, username 정규표현식
     // 얘를 다른 객체에 넣어놔가지고 import?
-    private static final String USERID_REG = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{5,10}$";
+    private static final String USERID_REG = "^(?=.*[a-zA-Z]|.*\\d)[a-zA-Z\\d]{5,10}$";
     private static final Pattern USERID_PATTERN = Pattern.compile(USERID_REG);
 
     private static final String USEREMAIL_REG = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
@@ -34,6 +32,10 @@ public class Member {
     private static final String USERNAME_REG = "^[a-zA-Z0-9]{2,8}$";
     private static final Pattern USERNAME_PATTERN = Pattern.compile(USERNAME_REG);
 
+
+    public Member() {
+
+    }
 
     public Member(String userId, String userName, String userEmail, int countFail) {
         setUserId(userId);

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.trip.dao.secure.MemberSecDAO">
+    <insert id = "regist" parameterType = "memberSecure">
+        insert into memberSecure (user_id, salt)
+        values (#{userId}, #{salt});
+    </insert>
+
+    <select id="getSalt" parameterType="String" resultType="String">
+        select salt
+        from memberSecure where user_id = {#userId};
+    </select>
+
+</mapper>
