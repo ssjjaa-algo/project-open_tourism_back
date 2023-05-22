@@ -2,6 +2,8 @@ package com.ssafy.trip.controller;
 
 import com.ssafy.trip.exception.BusinessException;
 import com.ssafy.trip.exception.ErrorResponse;
+import com.ssafy.trip.exception.MaliciousAccessException;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.context.properties.bind.BindException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,13 +63,19 @@ public class GlobalControllerAdvice {
         return new ResponseEntity<>(new ErrorResponse(e.getMessage()),HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(MaliciousAccessException.class)
+    protected ResponseEntity<ErrorResponse> handleMaliciousAccessException(MaliciousAccessException e) {
+        return new ResponseEntity<>(new ErrorResponse(e.getMessage()),HttpStatus.UNAUTHORIZED);
+    }
     @ExceptionHandler(BusinessException.class)
     protected ResponseEntity<ErrorResponse> handleBusinessException(final BusinessException e) {
+
         return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ErrorResponse> handleException(Exception e) {
+        e.printStackTrace();
         return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

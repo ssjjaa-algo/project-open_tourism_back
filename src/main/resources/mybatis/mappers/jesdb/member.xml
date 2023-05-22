@@ -11,7 +11,26 @@
 
     <select id="login" parameterType="String" resultType="member">
         select *
-        from member where user_id = {#userId};
+        from member where user_id = #{userId} and user_pwd = #{userPwd};
     </select>
+
+    <select id="duplicateId" parameterType="String" resultType="String">
+        select user_id
+        from member where user_id = #{userId};
+    </select>
+
+
+    <select id="duplicateName" parameterType="String" resultType="String">
+        select user_name
+        from member where user_name = #{userName};
+    </select>
+
+
+    <select id="duplicateEmail" parameterType="String" resultType="String">
+        select user_email
+        from member where user_email = #{userEmail};
+    </select>
+
+
 
 </mapper>
