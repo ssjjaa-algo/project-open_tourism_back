@@ -23,12 +23,12 @@ public class AttractionRequestDto {
     }
 
     public void setGugunCode(int gugunCode) {
-        if(sidoCode<0) throw new InvalidAttractionAttributeException();
+        if(gugunCode<0) throw new InvalidAttractionAttributeException();
         this.gugunCode = gugunCode;
     }
 
     public void setContentTypeId(int contentTypeId) {
-        if(sidoCode<0) throw new InvalidAttractionAttributeException();
+        if(contentTypeId<0) throw new InvalidAttractionAttributeException();
         this.contentTypeId = contentTypeId;
     }
 
