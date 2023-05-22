@@ -46,9 +46,10 @@ public class MemberController {
     }
 
     @PostMapping("/duplicateId")
-    public ResponseEntity<String> duplicateId(@RequestBody MemberDuplicatgeIdRequestDto id) {
-        System.out.println("Check duplicateId " + id);
-        if(memberService.duplicateId(id)) {
+    public ResponseEntity<String> duplicateId(@RequestBody MemberDuplicateIdRequestDto memberDuplicateIdRequestDto) {
+        System.out.println("Check duplicateId " + memberDuplicateIdRequestDto.getUserId());
+
+        if(memberService.duplicateId(memberDuplicateIdRequestDto.getUserId())) {
             return new ResponseEntity<>("duplicate",HttpStatus.OK);
         }
 
