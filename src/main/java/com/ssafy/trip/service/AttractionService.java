@@ -7,10 +7,12 @@ import com.ssafy.trip.domain.attraction.Gugun;
 import com.ssafy.trip.domain.attraction.Sido;
 import com.ssafy.trip.dto.request.AttractionRequestDto;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class AttractionService {
 
     AttractionDAO attractionDAO;
