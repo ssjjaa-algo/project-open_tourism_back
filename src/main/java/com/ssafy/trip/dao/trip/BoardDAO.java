@@ -1,4 +1,4 @@
-package com.ssafy.trip.dao;
+package com.ssafy.trip.dao.trip;
 
 import com.ssafy.trip.dto.request.BoardCreateRequestDto;
 import com.ssafy.trip.dto.request.BoardDeleteRequestDto;

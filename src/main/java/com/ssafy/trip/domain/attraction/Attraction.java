@@ -6,6 +6,7 @@ public class Attraction {
     private double latitude, longitude;
     private String title, address1, address2, firstImage1, firstImage2;
 
+    public Attraction(){}
     public Attraction(double latitude, double longitude, String title, String address1, String address2,
                              String firstImage1, String firstImage2) {
         setLatitude(latitude);
