@@ -1,4 +1,4 @@
-package com.ssafy.trip.dao;
+package com.ssafy.trip.dao.trip;
 
 import com.ssafy.trip.domain.attraction.Attraction;
 import com.ssafy.trip.domain.attraction.Gugun;

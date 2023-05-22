@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 @Getter
 public class MemberRegistRequest {
 
-    @NonNull
+    // @NonNull
     private String userId;
     @NonNull
     private String userPwd;
@@ -18,6 +18,9 @@ public class MemberRegistRequest {
     @NonNull
     private String userEmail;
 
+    public MemberRegistRequest() {
+
+    }
     public MemberRegistRequest(@NonNull String userId, @NonNull String userPwd, @NonNull String userName, @NonNull String userEmail) {
         this.userId = userId;
         validation(userPwd);

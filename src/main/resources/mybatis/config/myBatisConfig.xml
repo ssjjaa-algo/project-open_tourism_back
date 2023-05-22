@@ -4,6 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <mappers>
-        <mapper resource="mybatis/mappers/attraction.xml"/>
+        <mapper resource="mybatis/mappers/jesdb/attraction.xml"/>
+        <mapper resource="mybatis/mappers/jesdb/member.xml"/>
+        <mapper resource="mybatis/mappers/saltdb/salt.xml"/>
     </mappers>
 </configuration>
