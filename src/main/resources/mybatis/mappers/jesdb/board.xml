@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.trip.dao.trip.BoardDAO">
+    <insert id="createBoard" parameterType="boardCreateRequestDto"
+        useGeneratedKeys="true">
+        INSERT INTO board(user_id, subject, content)
+        VALUES (#{userId}, #{subject}, #{content})
+    </insert>
+    <update id="updateBoard" parameterType="boardUpdateRequestDto"
+            useGeneratedKeys="true">
+        UPDATE board
+        SET subject=#{subject},
+            content=#{content}
+        WHERE user_id=#{userId} AND articleno = #{articleno}
+    </update>
+    <delete id="deleteBoard" parameterType="boardDeleteRequestDto">
+        DELETE FROM board
+        WHERE user_id=#{userId} AND articleno = #{articleno}
+    </delete>
+</mapper>

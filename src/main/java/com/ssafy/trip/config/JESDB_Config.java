@@ -14,6 +14,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
@@ -46,4 +47,10 @@ public class JESDB_Config {
         return new SqlSessionTemplate(jesdbSqlSessionFactory);
     }
 
+    // DataSource 에서 Transaction 관리를 위한 Manager 클래스 등록
+    @Primary
+    @Bean
+    public DataSourceTransactionManager jesTransactionManager(@Qualifier("jesdbDataSource") DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
+    }
 }

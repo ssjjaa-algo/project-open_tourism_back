@@ -13,6 +13,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
@@ -43,5 +44,8 @@ public class SALTDB_Config {
     public SqlSessionTemplate saltdbSqlSessionTemplate(SqlSessionFactory saltdbSqlSessionFactory) throws Exception{
         return new SqlSessionTemplate(saltdbSqlSessionFactory);
     }
-
+    @Bean("saltTransactionManager")
+    public DataSourceTransactionManager jesTransactionManager(@Qualifier("saltdbDataSource")DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
+    }
 }
