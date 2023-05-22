@@ -1,7 +1,8 @@
 package com.ssafy.trip.exception;
 
 
-public class BusinessException extends RuntimeException {
+public class BusinessException extends GlobalException {
+
     public BusinessException() {
         super();
     }
