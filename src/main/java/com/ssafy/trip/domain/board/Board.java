@@ -1,7 +1,6 @@
 package com.ssafy.trip.domain.board;
 
-import com.ssafy.trip.exception.NoBoardContentException;
-import com.ssafy.trip.exception.NoBoardSubjectException;
+import com.ssafy.trip.exception.InvalidBoardRequestException;
 
 import java.util.Date;
 
@@ -26,16 +25,15 @@ public class Board {
         this.userId = userId;
     }
 
-    private void setContent(String content) {
-        if(content==null || content.trim().length()==0) throw new NoBoardContentException();
+    public void setContent(String content) {
+        if (content == null || content.trim().length() == 0) throw new InvalidBoardRequestException("내용을 작성해주세요");
         this.content = content;
     }
 
-    private void setSubject(String subject) {
-        if(subject==null || subject.trim().length()==0) throw new NoBoardSubjectException();
+    public void setSubject(String subject) {
+        if (subject == null || subject.trim().length() == 0) throw new InvalidBoardRequestException("제목을 작성해주세요");
         this.subject = subject;
     }
-
     private void setArticleno(int articleno) {
         this.articleno = articleno;
     }
@@ -43,6 +41,7 @@ public class Board {
     private void setHit(int hit) {
         this.hit = hit;
     }
+
     private void setRegtime(Date regtime) {
         this.regtime = regtime;
     }

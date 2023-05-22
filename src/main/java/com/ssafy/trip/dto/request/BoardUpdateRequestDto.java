@@ -1,7 +1,6 @@
 package com.ssafy.trip.dto.request;
 
-import com.ssafy.trip.exception.NoBoardContentException;
-import com.ssafy.trip.exception.NoBoardSubjectException;
+import com.ssafy.trip.exception.InvalidBoardRequestException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -29,12 +28,12 @@ public class BoardUpdateRequestDto {
     }
 
     public void setContent(String content) {
-        if (content == null || content.trim().length() == 0) throw new NoBoardContentException();
+        if (content == null || content.trim().length() == 0) throw new InvalidBoardRequestException("내용을 작성해주세요");
         this.content = content;
     }
 
     public void setSubject(String subject) {
-        if (subject == null || subject.trim().length() == 0) throw new NoBoardSubjectException();
+        if (subject == null || subject.trim().length() == 0) throw new InvalidBoardRequestException("제목을 작성해주세요");
         this.subject = subject;
     }
 }

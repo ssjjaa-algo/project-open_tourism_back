@@ -2,6 +2,7 @@ package com.ssafy.trip.controller;
 
 import com.ssafy.trip.exception.BusinessException;
 import com.ssafy.trip.exception.ErrorResponse;
+import com.ssafy.trip.exception.GlobalException;
 import org.springframework.boot.context.properties.bind.BindException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ public class GlobalControllerAdvice {
     }
 
     /**
-     * @ModelAttribut 으로 binding error 발생시 BindException 발생한다.
+     * @ModelAttribute 으로 binding error 발생시 BindException 발생한다.
      * ref https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-ann-modelattrib-method-args
      */
     @ExceptionHandler(BindException.class)
@@ -62,12 +63,18 @@ public class GlobalControllerAdvice {
     }
 
     @ExceptionHandler(BusinessException.class)
-    protected ResponseEntity<ErrorResponse> handleBusinessException(final BusinessException e) {
-        return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+    protected ResponseEntity<ErrorResponse> handleBusinessException(BusinessException e) {
+        return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
+    @ExceptionHandler(GlobalException.class)
+    protected ResponseEntity<ErrorResponse> handleGlobalException(GlobalException e) {
+        return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ErrorResponse> handleException(Exception e) {
-        return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        e.printStackTrace();
+        return new ResponseEntity<>(new ErrorResponse("서버 내부에서 에러 발생"), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

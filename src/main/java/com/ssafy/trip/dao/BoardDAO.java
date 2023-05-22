@@ -1,6 +1,7 @@
 package com.ssafy.trip.dao;
 
 import com.ssafy.trip.dto.request.BoardCreateRequestDto;
+import com.ssafy.trip.dto.request.BoardDeleteRequestDto;
 import com.ssafy.trip.dto.request.BoardUpdateRequestDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -9,5 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BoardDAO {
     void createBoard(BoardCreateRequestDto createBoardRequestDto);
-    void updateBoard(BoardUpdateRequestDto updateBoardRequestDto);
+    int updateBoard(BoardUpdateRequestDto updateBoardRequestDto);
+    int deleteBoard(BoardDeleteRequestDto boardDeleteRequestDto);
 }

@@ -1,6 +1,7 @@
 package com.ssafy.trip.controller;
 
 import com.ssafy.trip.dto.request.BoardCreateRequestDto;
+import com.ssafy.trip.dto.request.BoardDeleteRequestDto;
 import com.ssafy.trip.dto.request.BoardUpdateRequestDto;
 import com.ssafy.trip.service.BoardService;
 import org.springframework.http.ResponseEntity;
@@ -21,16 +22,23 @@ public class BoardController {
      * id값도 그냥 클라에서 쿠키로 보낸다음 토큰에 저장된 id값과 비교해야하는 건지..
      */
     @PostMapping("/insert")
-    public ResponseEntity<Void> createBoard(@RequestBody BoardCreateRequestDto createBoardRequestDto) {
+    public ResponseEntity<String> createBoard(@RequestBody BoardCreateRequestDto createBoardRequestDto) {
         boardService.createBoard(createBoardRequestDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("OK");
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<Void> updateBoard(@RequestBody BoardUpdateRequestDto updateBoardRequestDto) {
+    public ResponseEntity<String> updateBoard(@RequestBody BoardUpdateRequestDto updateBoardRequestDto) {
         boardService.updateBoard(updateBoardRequestDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("OK");
     }
 
-
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteBoard(@RequestBody BoardDeleteRequestDto boardDeleteRequestDto ) {
+        int result = boardService.deleteBoard(boardDeleteRequestDto);
+        if(result==0) {
+            return ResponseEntity.ok("삭제 실패");
+        }
+        return ResponseEntity.ok("삭제 성공");
+    }
 }

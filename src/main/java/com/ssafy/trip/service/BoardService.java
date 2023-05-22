@@ -2,6 +2,7 @@ package com.ssafy.trip.service;
 
 import com.ssafy.trip.dao.BoardDAO;
 import com.ssafy.trip.dto.request.BoardCreateRequestDto;
+import com.ssafy.trip.dto.request.BoardDeleteRequestDto;
 import com.ssafy.trip.dto.request.BoardUpdateRequestDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,5 +23,9 @@ public class BoardService {
 
     public void updateBoard(BoardUpdateRequestDto updateBoardRequestDto) {
         boardDAO.updateBoard(updateBoardRequestDto);
+    }
+
+    public int deleteBoard(BoardDeleteRequestDto boardDeleteRequestDto) {
+        return boardDAO.deleteBoard(boardDeleteRequestDto);
     }
 }

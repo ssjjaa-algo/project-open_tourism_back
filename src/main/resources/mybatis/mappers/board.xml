@@ -16,4 +16,8 @@
             content=#{content}
         WHERE user_id=#{userId} AND articleno = #{articleno}
     </update>
+    <delete id="deleteBoard" parameterType="boardDeleteRequestDto">
+        DELETE FROM board
+        WHERE user_id=#{userId} AND articleno = #{articleno}
+    </delete>
 </mapper>
