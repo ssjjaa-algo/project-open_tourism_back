@@ -1,11 +1,11 @@
 package com.ssafy.trip.service;
 
 
-import com.ssafy.trip.dao.AttractionDAO;
+import com.ssafy.trip.dao.trip.AttractionDAO;
 import com.ssafy.trip.domain.attraction.Attraction;
 import com.ssafy.trip.domain.attraction.Gugun;
 import com.ssafy.trip.domain.attraction.Sido;
-import com.ssafy.trip.dto.request.dto.AttractionRequestDto;
+import com.ssafy.trip.dto.request.AttractionRequestDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

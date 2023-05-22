@@ -3,7 +3,7 @@ package com.ssafy.trip.controller;
 import com.ssafy.trip.domain.attraction.Attraction;
 import com.ssafy.trip.domain.attraction.Gugun;
 import com.ssafy.trip.domain.attraction.Sido;
-import com.ssafy.trip.dto.request.dto.AttractionRequestDto;
+import com.ssafy.trip.dto.request.AttractionRequestDto;
 import com.ssafy.trip.service.AttractionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

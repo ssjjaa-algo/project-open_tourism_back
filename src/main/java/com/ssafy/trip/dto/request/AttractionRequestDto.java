@@ -1,4 +1,4 @@
-package com.ssafy.trip.dto.request.dto;
+package com.ssafy.trip.dto.request;
 
 import com.ssafy.trip.exception.InvalidAttractionAttributeException;
 import lombok.Getter;

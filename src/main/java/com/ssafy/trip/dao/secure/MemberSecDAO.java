@@ -1,4 +1,4 @@
-package com.ssafy.trip.dao;
+package com.ssafy.trip.dao.secure;
 
 import com.ssafy.trip.domain.member.MemberSecure;
 import org.apache.ibatis.annotations.Mapper;
@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface MemberSecDAO {
-    MemberSecure insertSalt() throws DataAccessException;
-    String getSalt() throws DataAccessException;
+    void regist(MemberSecure memberSecure) throws DataAccessException;
+    String getSalt(String userId) throws DataAccessException;
+
+
 }

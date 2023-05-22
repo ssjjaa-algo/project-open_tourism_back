@@ -9,6 +9,8 @@ public class Sido {
     private int sidoCode;
     private String sidoName;
 
+    public Sido(){}
+
     public Sido(int sidoCode, String sidoName) throws InvalidAttractionAttributeException {
         setSidoCode(sidoCode);
         setSidoName(sidoName);
