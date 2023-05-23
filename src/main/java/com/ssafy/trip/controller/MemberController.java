@@ -1,16 +1,19 @@
 package com.ssafy.trip.controller;
 
 import com.ssafy.trip.domain.member.Member;
-import com.ssafy.trip.dto.request.MemberDuplicateIdRequestDto;
-import com.ssafy.trip.dto.request.MemberRegistRequest;
-import com.ssafy.trip.exception.InvalidRegistException;
+import com.ssafy.trip.dto.request.*;
+import com.ssafy.trip.exception.BusinessException;
+import com.ssafy.trip.exception.MaliciousAccessException;
 import com.ssafy.trip.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/user")
@@ -23,18 +26,16 @@ public class MemberController {
     }
 
     @PostMapping("/regist")
-    public ResponseEntity<String> regist(@RequestBody MemberRegistRequest memberRegistRequest) {
+    public ResponseEntity<String> regist(@RequestBody MemberRegistRequestDto memberRegistRequestDto) {
 
         try {
-            String userid = memberRegistRequest.getUserId();
-            String userpwd = memberRegistRequest.getUserPwd();
-            String username = memberRegistRequest.getUserName();
-            String useremail = memberRegistRequest.getUserEmail();
+            String userid = memberRegistRequestDto.getUserId();
+            String userpwd = memberRegistRequestDto.getUserPwd();
+            String username = memberRegistRequestDto.getUserName();
+            String useremail = memberRegistRequestDto.getUserEmail();
 
-            System.out.println(userid + " " + userpwd);
             Member member = new Member(userid, username, useremail, 5, null);
-            System.out.println("생성자 완료");
-            // 생성자 유효성 검사, pwd는 안집어넣고
+            System.out.println(member.getUserId());
             memberService.regist(member, userpwd); // service로 보내 salt값으로 넣으러 간다
 
             System.out.println(member.getUserId() + " " + member.getUserPwd());
@@ -44,41 +45,62 @@ public class MemberController {
         }
         return ResponseEntity.ok().build();
     }
+    @PostMapping("/login")
+    public ResponseEntity<String> login(HttpServletRequest request,
+                                        HttpServletResponse response,
+                                        @RequestBody MemberLoginRequestDto memberLoginRequestDto) {
+        System.out.println("hi\n\n");
+        try {
+            System.out.println(memberLoginRequestDto.getUserId() + " " + memberLoginRequestDto.getUserPwd());
+            Member member = memberService.login(memberLoginRequestDto.getUserId(),memberLoginRequestDto.getUserPwd());
+
+            System.out.println(member.getUserId() + " " +member.getUserName());
+            if (member != null) {
+                HttpSession session = request.getSession();
+                session.setAttribute("userId",member.getUserId());
+                Cookie cookie = new Cookie("userId",member.getUserId());
+                cookie.setPath("/"); // 전역
+                response.addCookie(cookie);
+            }
+        } catch(MaliciousAccessException e) {
+            throw new MaliciousAccessException();
+        }
+        return ResponseEntity.ok().build();
+    }
 
     @PostMapping("/duplicateId")
     public ResponseEntity<String> duplicateId(@RequestBody MemberDuplicateIdRequestDto memberDuplicateIdRequestDto) {
-        System.out.println("Check duplicateId " + memberDuplicateIdRequestDto.getUserId());
 
         if(memberService.duplicateId(memberDuplicateIdRequestDto.getUserId())) {
-            return new ResponseEntity<>("duplicate",HttpStatus.OK);
+            return ResponseEntity.ok("Duplicate");
         }
 
         else {
-            return new ResponseEntity<>("notDuplicate",HttpStatus.OK);
+            return ResponseEntity.ok("notDuplicate");
         }
 
     }
     @PostMapping("/duplicateName")
-    public ResponseEntity<String> duplicateName(@RequestBody String name) {
+    public ResponseEntity<String> duplicateName(@RequestBody MemberDuplicateNameRequestDto memberDuplicateNameRequestDto) {
 
-        if(memberService.duplicateName(name)) {
-            return new ResponseEntity<>("duplicate",HttpStatus.OK);
+        if(memberService.duplicateName(memberDuplicateNameRequestDto.getUserName())) {
+            return ResponseEntity.ok("Duplicate");
         }
 
         else {
-            return new ResponseEntity<>("notDuplicate",HttpStatus.OK);
+            return ResponseEntity.ok("notDuplicate");
         }
 
     }
     @PostMapping("/duplicateEmail")
-    public ResponseEntity<String> duplicateEmail(@RequestBody String email) {
+    public ResponseEntity<String> duplicateEmail(@RequestBody MemberDuplicateEmailRequestDto memberDuplicateEmailRequestDto) {
 
-        if(memberService.duplicateEmail(email)) {
-            return new ResponseEntity<>("duplicate",HttpStatus.OK);
+        if(memberService.duplicateEmail(memberDuplicateEmailRequestDto.getUserEmail())) {
+            return ResponseEntity.ok("Duplicate");
         }
 
         else {
-            return new ResponseEntity<>("notDuplicate",HttpStatus.OK);
+            return ResponseEntity.ok("notDuplicate");
         }
 
     }

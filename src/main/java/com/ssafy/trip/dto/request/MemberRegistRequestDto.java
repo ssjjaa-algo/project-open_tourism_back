@@ -7,7 +7,7 @@ import lombok.NonNull;
 import java.util.regex.Pattern;
 
 @Getter
-public class MemberRegistRequest {
+public class MemberRegistRequestDto {
 
     // @NonNull
     private String userId;
@@ -18,10 +18,10 @@ public class MemberRegistRequest {
     @NonNull
     private String userEmail;
 
-    public MemberRegistRequest() {
+    public MemberRegistRequestDto() {
 
     }
-    public MemberRegistRequest(@NonNull String userId, @NonNull String userPwd, @NonNull String userName, @NonNull String userEmail) {
+    public MemberRegistRequestDto(@NonNull String userId, @NonNull String userPwd, @NonNull String userName, @NonNull String userEmail) {
         this.userId = userId;
         validation(userPwd);
         this.userPwd = userPwd;

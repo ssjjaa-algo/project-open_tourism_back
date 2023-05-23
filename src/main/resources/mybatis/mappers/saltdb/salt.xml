@@ -11,7 +11,7 @@
 
     <select id="getSalt" parameterType="String" resultType="String">
         select salt
-        from memberSecure where user_id = {#userId};
+        from memberSecure where user_id = #{userId};
     </select>
 
 </mapper>

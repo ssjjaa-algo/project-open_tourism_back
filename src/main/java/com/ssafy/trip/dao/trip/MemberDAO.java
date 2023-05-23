@@ -13,9 +13,11 @@ public interface MemberDAO {
 
     void regist(Member member) throws DataAccessException;
 
-    String duplicateId(String id) throws DataAccessException;
+    String duplicateId(String userId) throws DataAccessException;
 
-    String duplicateName(String name) throws DataAccessException;
+    String duplicateName(String userName) throws DataAccessException;
 
-    String duplicateEmail(String email) throws DataAccessException;
+    String duplicateEmail(String userEmail) throws DataAccessException;
+
+    Member login(String userId, String userPwd) throws DataAccessException;
 }
