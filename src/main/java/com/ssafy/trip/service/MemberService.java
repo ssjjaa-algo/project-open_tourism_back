@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional("jesTransactionManager")
 public class MemberService {
 
     private MemberDAO memberDAO;
@@ -74,9 +75,12 @@ public class MemberService {
     public Member login(String userId, String userPwd) {
 
         String salt = memberSecDAO.getSalt(userId);
+        System.out.println(salt);
         if (salt == null) return null;
 
         String encPw = DataUtil.getEncrypt(userPwd,salt);
+
+        System.out.println(userId + " " + encPw);
 
         return memberDAO.login(userId,encPw); // 해당 pw를 가진 member 찾으러 가지
     }

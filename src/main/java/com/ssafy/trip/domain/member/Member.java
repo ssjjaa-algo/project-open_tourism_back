@@ -37,6 +37,7 @@ public class Member {
 
     }
 
+
     public Member(String userId, String userName, String userEmail, int countFail) {
         setUserId(userId);
         setUserName(userName);
