@@ -3,9 +3,12 @@ package com.ssafy.trip.controller;
 import com.ssafy.trip.dto.request.BoardCreateRequestDto;
 import com.ssafy.trip.dto.request.BoardDeleteRequestDto;
 import com.ssafy.trip.dto.request.BoardUpdateRequestDto;
+import com.ssafy.trip.dto.response.BoardSimpleInfoResponseDto;
 import com.ssafy.trip.service.BoardService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/board")
 @RestController
@@ -17,13 +20,13 @@ public class BoardController {
         this.boardService = boardService;
     }
 
-    /**
-     * 현재 고민인 부분.
-     * id값도 그냥 클라에서 쿠키로 보낸다음 토큰에 저장된 id값과 비교해야하는 건지..
-     */
+    @GetMapping("/list")
+    public ResponseEntity<List<BoardSimpleInfoResponseDto>> getBoardSimpleInfoList() {
+        return ResponseEntity.ok().body(boardService.getSimpleInfoBoardList());
+    }
+
     @PostMapping("/insert")
     public ResponseEntity<String> createBoard(@RequestBody BoardCreateRequestDto createBoardRequestDto) {
-        System.out.println("hi");
         boardService.createBoard(createBoardRequestDto);
         return ResponseEntity.ok("OK");
     }
