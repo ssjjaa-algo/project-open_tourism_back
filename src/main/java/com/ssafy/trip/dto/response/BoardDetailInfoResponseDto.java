@@ -1,14 +1,15 @@
-package com.ssafy.trip.domain.board;
+package com.ssafy.trip.dto.response;
 
+import com.ssafy.trip.domain.board.Board;
 import com.ssafy.trip.exception.InvalidBoardRequestException;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Getter
 @NoArgsConstructor
-public class Board {
+@Builder
+public class BoardDetailInfoResponseDto {
     private int articleno;
     private String userId;
     private String content;
@@ -16,7 +17,7 @@ public class Board {
     private int hit;
     private String regtime;
 
-    public Board(int articleno, String userId, String content, String subject, int hit, String regtime) {
+    public BoardDetailInfoResponseDto(int articleno, String userId, String content, String subject, int hit, String regtime) {
         setUserId(userId);
         setContent(content);
         setSubject(subject);
@@ -48,5 +49,16 @@ public class Board {
 
     private void setRegtime(String regtime) {
         this.regtime = regtime;
+    }
+
+    public static BoardDetailInfoResponseDto of(Board board) {
+        return BoardDetailInfoResponseDto.builder()
+                .articleno(board.getArticleno())
+                .hit(board.getHit())
+                .subject(board.getSubject())
+                .regtime(board.getRegtime())
+                .content(board.getContent())
+                .userId(board.getUserId())
+                .build();
     }
 }
