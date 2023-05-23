@@ -2,6 +2,7 @@ package com.ssafy.trip.controller;
 
 import com.ssafy.trip.domain.member.Member;
 import com.ssafy.trip.dto.request.*;
+import com.ssafy.trip.dto.response.MemberLoginResponseDto;
 import com.ssafy.trip.exception.BusinessException;
 import com.ssafy.trip.exception.MaliciousAccessException;
 import com.ssafy.trip.service.MemberService;
@@ -46,26 +47,39 @@ public class MemberController {
         return ResponseEntity.ok().build();
     }
     @PostMapping("/login")
-    public ResponseEntity<String> login(HttpServletRequest request,
+    public ResponseEntity<MemberLoginResponseDto> login(HttpServletRequest request,
                                         HttpServletResponse response,
                                         @RequestBody MemberLoginRequestDto memberLoginRequestDto) {
-        System.out.println("hi\n\n");
+
         try {
-            System.out.println(memberLoginRequestDto.getUserId() + " " + memberLoginRequestDto.getUserPwd());
             Member member = memberService.login(memberLoginRequestDto.getUserId(),memberLoginRequestDto.getUserPwd());
 
             System.out.println(member.getUserId() + " " +member.getUserName());
             if (member != null) {
+                MemberLoginResponseDto memberLoginResponseDto = new MemberLoginResponseDto(
+                        member.getUserId(),member.getUserName()
+                );
                 HttpSession session = request.getSession();
                 session.setAttribute("userId",member.getUserId());
-                Cookie cookie = new Cookie("userId",member.getUserId());
-                cookie.setPath("/"); // 전역
-                response.addCookie(cookie);
+
+                return ResponseEntity.ok(memberLoginResponseDto);
             }
         } catch(MaliciousAccessException e) {
             throw new MaliciousAccessException();
         }
-        return ResponseEntity.ok().build();
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+
+    @GetMapping("logout")
+    public ResponseEntity<String> logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+
+        if (session != null) {
+            session.invalidate();
+            return ResponseEntity.ok().build();
+        }
+
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
     @PostMapping("/duplicateId")

@@ -6,11 +6,16 @@
 <mapper namespace="com.ssafy.trip.dao.trip.MemberDAO">
     <insert id = "regist" parameterType = "member">
         insert into member (user_id,user_pwd,user_name,user_email,count_fail,refresh_token)
-        values (#{userId}, #{userPwd},#{userName},#{userEmail},0,NULL);
+        values (#{userId}, #{userPwd},#{userName},#{userEmail},5,NULL);
     </insert>
 
     <select id="login" parameterType="String" resultType="member">
-        select *
+        select user_id as userId,
+               user_name as userName,
+               user_pwd as userPwd,
+               user_email as userEmail,
+               count_fail as countFail,
+               refresh_token as refreshToken
         from member where user_id = #{userId} and user_pwd = #{userPwd};
     </select>
 

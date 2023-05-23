@@ -24,6 +24,7 @@ public class BoardController {
     @PostMapping("/insert")
     public ResponseEntity<String> createBoard(@RequestBody BoardCreateRequestDto createBoardRequestDto) {
         System.out.println("hi");
+
         boardService.createBoard(createBoardRequestDto);
         return ResponseEntity.ok("OK");
     }
