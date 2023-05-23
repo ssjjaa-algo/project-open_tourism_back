@@ -65,6 +65,8 @@ public class MemberController {
                 Cookie cookie = new Cookie("userId",member.getUserId());
                 cookie.setPath("/");
                 response.addCookie(cookie);
+                Cookie cookie2 = new Cookie("userName",member.getUserName());
+                response.addCookie(cookie2);
                 return new ResponseEntity<>(memberLoginResponseDto, HttpStatus.OK);
             }
         } catch(MaliciousAccessException e) {
