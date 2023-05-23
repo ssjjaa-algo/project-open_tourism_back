@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/user")
 public class MemberController {
 
@@ -59,10 +60,12 @@ public class MemberController {
                 MemberLoginResponseDto memberLoginResponseDto = new MemberLoginResponseDto(
                         member.getUserId(),member.getUserName()
                 );
-                HttpSession session = request.getSession();
+                HttpSession session = request.getSession(true);
                 session.setAttribute("userId",member.getUserId());
-
-                return ResponseEntity.ok(memberLoginResponseDto);
+                Cookie cookie = new Cookie("userId",member.getUserId());
+                cookie.setPath("/");
+                response.addCookie(cookie);
+                return new ResponseEntity<>(memberLoginResponseDto, HttpStatus.OK);
             }
         } catch(MaliciousAccessException e) {
             throw new MaliciousAccessException();
