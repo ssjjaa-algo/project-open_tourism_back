@@ -43,12 +43,12 @@ public class BoardController {
         return ResponseEntity.ok("OK");
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteBoard(@RequestBody BoardDeleteRequestDto boardDeleteRequestDto) {
-        int result = boardService.deleteBoard(boardDeleteRequestDto);
+    @DeleteMapping("/delete/{articleno}")
+    public ResponseEntity<String> deleteBoard(@PathVariable("articleno") int articleno) {
+        int result = boardService.deleteBoard(articleno);
         if (result == 0) {
-            return ResponseEntity.ok("삭제 실패");
+            return ResponseEntity.ok("FAIL");
         }
-        return ResponseEntity.ok("삭제 성공");
+        return ResponseEntity.ok("OK");
     }
 }

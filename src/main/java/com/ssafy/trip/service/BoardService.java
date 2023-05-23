@@ -31,8 +31,8 @@ public class BoardService {
         boardDAO.updateBoard(updateBoardRequestDto);
     }
 
-    public int deleteBoard(BoardDeleteRequestDto boardDeleteRequestDto) {
-        return boardDAO.deleteBoard(boardDeleteRequestDto);
+    public int deleteBoard(int articleno) {
+        return boardDAO.deleteBoard(articleno);
     }
 
     public List<BoardSimpleInfoResponseDto> getSimpleInfoBoardList() {
