@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional("jesTransactionManager")
 public class AttractionService {
 
     AttractionDAO attractionDAO;
@@ -22,8 +22,8 @@ public class AttractionService {
     }
 
     public List<Sido> selectAllSido() {
-         return attractionDAO.selectAllSido();
-     }
+        return attractionDAO.selectAllSido();
+    }
 
     public List<Gugun> selectGugun(int sidoCode) {
         return attractionDAO.selectGugun(sidoCode);
