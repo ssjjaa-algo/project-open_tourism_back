@@ -3,6 +3,7 @@ package com.ssafy.trip.domain.board;
 import com.ssafy.trip.exception.InvalidBoardRequestException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.util.Date;
 
@@ -26,6 +27,7 @@ public class Board {
     }
 
     private void setUserId(String userId) {
+        if (userId == null ||userId.trim().length() == 0) throw new InvalidBoardRequestException("잘못된 요청입니다.");
         this.userId = userId;
     }
 
