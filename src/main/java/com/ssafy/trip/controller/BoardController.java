@@ -3,6 +3,7 @@ package com.ssafy.trip.controller;
 import com.ssafy.trip.dto.request.BoardCreateRequestDto;
 import com.ssafy.trip.dto.request.BoardDeleteRequestDto;
 import com.ssafy.trip.dto.request.BoardUpdateRequestDto;
+import com.ssafy.trip.dto.response.BoardDetailInfoResponseDto;
 import com.ssafy.trip.dto.response.BoardSimpleInfoResponseDto;
 import com.ssafy.trip.service.BoardService;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,11 @@ public class BoardController {
 
     public BoardController(BoardService boardService) {
         this.boardService = boardService;
+    }
+
+    @GetMapping("/detail/{articleno}")
+    public ResponseEntity<BoardDetailInfoResponseDto> selectBoard(@PathVariable("articleno") int articleno) {
+        return ResponseEntity.ok().body(boardService.selectBoard(articleno));
     }
 
     @GetMapping("/list")
@@ -38,9 +44,9 @@ public class BoardController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteBoard(@RequestBody BoardDeleteRequestDto boardDeleteRequestDto ) {
+    public ResponseEntity<String> deleteBoard(@RequestBody BoardDeleteRequestDto boardDeleteRequestDto) {
         int result = boardService.deleteBoard(boardDeleteRequestDto);
-        if(result==0) {
+        if (result == 0) {
             return ResponseEntity.ok("삭제 실패");
         }
         return ResponseEntity.ok("삭제 성공");

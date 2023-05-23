@@ -28,4 +28,9 @@
                    end regtime
         from board
     </select>
+    <select id="getBoardDetailInfo" resultType="board">
+        select *
+        FROM board
+        WHERE articleno=#{articleno}
+    </select>
 </mapper>

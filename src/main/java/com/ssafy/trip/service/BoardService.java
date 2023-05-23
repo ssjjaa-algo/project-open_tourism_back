@@ -5,6 +5,7 @@ import com.ssafy.trip.domain.board.Board;
 import com.ssafy.trip.dto.request.BoardCreateRequestDto;
 import com.ssafy.trip.dto.request.BoardDeleteRequestDto;
 import com.ssafy.trip.dto.request.BoardUpdateRequestDto;
+import com.ssafy.trip.dto.response.BoardDetailInfoResponseDto;
 import com.ssafy.trip.dto.response.BoardSimpleInfoResponseDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,5 +47,9 @@ public class BoardService {
             boardSimpleInfoResponseDtoList.add(BoardSimpleInfoResponseDto.of(board));
         }
         return boardSimpleInfoResponseDtoList;
+    }
+
+    public BoardDetailInfoResponseDto selectBoard(int articleno) {
+        return BoardDetailInfoResponseDto.of(boardDAO.getBoardDetailInfo(articleno));
     }
 }
