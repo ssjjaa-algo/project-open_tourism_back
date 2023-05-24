@@ -56,21 +56,12 @@ public class GlobalControllerAdvice {
         return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.METHOD_NOT_ALLOWED);
     }
 
-    /**
-     * Authentication 객체가 필요한 권한을 보유하지 않은 경우 발생합니다.
-     */
-    @ExceptionHandler(AccessDeniedException.class)
-    protected ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException e) {
-        return new ResponseEntity<>(new ErrorResponse(e.getMessage()),HttpStatus.UNAUTHORIZED);
-    }
-
     @ExceptionHandler(MaliciousAccessException.class)
     protected ResponseEntity<ErrorResponse> handleMaliciousAccessException(MaliciousAccessException e) {
         return new ResponseEntity<>(new ErrorResponse(e.getMessage()),HttpStatus.UNAUTHORIZED);
     }
+
     @ExceptionHandler(BusinessException.class)
-
-
     protected ResponseEntity<ErrorResponse> handleBusinessException(BusinessException e) {
         return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.UNPROCESSABLE_ENTITY);
     }

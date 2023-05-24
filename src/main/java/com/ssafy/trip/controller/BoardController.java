@@ -9,6 +9,9 @@ import com.ssafy.trip.service.BoardService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RequestMapping("/board")
@@ -22,8 +25,14 @@ public class BoardController {
     }
 
     @GetMapping("/detail/{articleno}")
-    public ResponseEntity<BoardDetailInfoResponseDto> selectBoard(@PathVariable("articleno") int articleno) {
-        return ResponseEntity.ok().body(boardService.selectBoard(articleno));
+    public ResponseEntity<BoardDetailInfoResponseDto> selectBoard(
+            @PathVariable("articleno") int articleno,
+            HttpServletRequest request
+            ) {
+        HttpSession session = request.getSession(false);
+
+        return ResponseEntity.ok().body(boardService.selectBoard(articleno,
+                (String)session.getAttribute("userId")));
     }
 
     @GetMapping("/list")
@@ -32,23 +41,28 @@ public class BoardController {
     }
 
     @PostMapping("/insert")
-    public ResponseEntity<String> createBoard(@RequestBody BoardCreateRequestDto createBoardRequestDto) {
+    public ResponseEntity<String> createBoard(@RequestBody BoardCreateRequestDto createBoardRequestDto,
+                                                HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        System.out.println(createBoardRequestDto.getUserId());
+        createBoardRequestDto.setUserId((String)session.getAttribute("userId"));
         boardService.createBoard(createBoardRequestDto);
         return ResponseEntity.ok("OK");
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<String> updateBoard(@RequestBody BoardUpdateRequestDto updateBoardRequestDto) {
+    public ResponseEntity<String> updateBoard(@RequestBody BoardUpdateRequestDto updateBoardRequestDto,
+                                              HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        updateBoardRequestDto.setUserId((String)session.getAttribute("userId"));
         boardService.updateBoard(updateBoardRequestDto);
         return ResponseEntity.ok("OK");
     }
 
     @DeleteMapping("/delete/{articleno}")
-    public ResponseEntity<String> deleteBoard(@PathVariable("articleno") int articleno) {
-        int result = boardService.deleteBoard(articleno);
-        if (result == 0) {
-            return ResponseEntity.ok("FAIL");
-        }
+    public ResponseEntity<String> deleteBoard(@PathVariable("articleno") int articleno, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        boardService.deleteBoard(articleno, (String)session.getAttribute("userId"));
         return ResponseEntity.ok("OK");
     }
 

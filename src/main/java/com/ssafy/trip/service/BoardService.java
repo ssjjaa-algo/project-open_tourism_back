@@ -3,10 +3,10 @@ package com.ssafy.trip.service;
 import com.ssafy.trip.dao.trip.BoardDAO;
 import com.ssafy.trip.domain.board.Board;
 import com.ssafy.trip.dto.request.BoardCreateRequestDto;
-import com.ssafy.trip.dto.request.BoardDeleteRequestDto;
 import com.ssafy.trip.dto.request.BoardUpdateRequestDto;
 import com.ssafy.trip.dto.response.BoardDetailInfoResponseDto;
 import com.ssafy.trip.dto.response.BoardSimpleInfoResponseDto;
+import com.ssafy.trip.exception.MaliciousAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,11 +28,17 @@ public class BoardService {
     }
 
     public void updateBoard(BoardUpdateRequestDto updateBoardRequestDto) {
-        boardDAO.updateBoard(updateBoardRequestDto);
+        int updatedCount = boardDAO.updateBoard(updateBoardRequestDto);
+        if(updatedCount==0) {
+            throw new MaliciousAccessException();
+        }
     }
 
-    public int deleteBoard(int articleno) {
-        return boardDAO.deleteBoard(articleno);
+    public void deleteBoard(int articleno, String userId) {
+        int deleteCount = boardDAO.deleteBoard(articleno, userId);
+        if(deleteCount==0) {
+            throw new MaliciousAccessException();
+        }
     }
 
     public List<BoardSimpleInfoResponseDto> getSimpleInfoBoardList() {
@@ -49,7 +55,11 @@ public class BoardService {
         return boardSimpleInfoResponseDtoList;
     }
 
-    public BoardDetailInfoResponseDto selectBoard(int articleno) {
-        return BoardDetailInfoResponseDto.of(boardDAO.getBoardDetailInfo(articleno));
+    public BoardDetailInfoResponseDto selectBoard(int articleno, String userId) {
+        Board board = boardDAO.getBoardDetailInfo(articleno, userId);
+        if(board==null) {
+            throw new MaliciousAccessException();
+        }
+        return BoardDetailInfoResponseDto.of(board);
     }
 }
