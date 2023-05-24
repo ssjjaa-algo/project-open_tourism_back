@@ -51,7 +51,7 @@ public class MemberController {
     public ResponseEntity<String> login(HttpServletRequest request,
                                         HttpServletResponse response,
                                         @RequestBody MemberLoginRequestDto memberLoginRequestDto) {
-
+        System.out.println("ㅁㄴㅇㄹㅁㄴㅇㄹㅁㄴㅇ");
         try {
             Member member = memberService.login(memberLoginRequestDto.getUserId(),memberLoginRequestDto.getUserPwd());
 
@@ -70,6 +70,7 @@ public class MemberController {
                 userNameCookie.setPath("/");
                 response.addCookie(userNameCookie);
 
+
                 return ResponseEntity.ok("success");
             }
         } catch(MaliciousAccessException e) {
@@ -82,11 +83,12 @@ public class MemberController {
     @PostMapping("logout")
     public ResponseEntity<String> logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
-
+        //System.out.println("enter");
         if (session != null) {
             System.out.println(session.getId());
             session.invalidate();
-            return ResponseEntity.ok().build();
+            //System.out.println("세션 지우기");
+            return ResponseEntity.ok("success");
         }
 
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
