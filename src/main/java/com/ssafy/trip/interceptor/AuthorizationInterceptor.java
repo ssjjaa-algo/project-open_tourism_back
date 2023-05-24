@@ -12,9 +12,9 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession(false);
-        System.out.println(session);
+
         //로그인 안된 유저
-        if(session==null) {
+        if(session==null || session.getAttribute("userId")==null) {
             throw new MaliciousAccessException();
         }
 
