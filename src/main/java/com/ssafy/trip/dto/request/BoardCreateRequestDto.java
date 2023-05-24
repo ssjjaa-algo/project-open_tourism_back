@@ -1,8 +1,10 @@
 package com.ssafy.trip.dto.request;
 
 import com.ssafy.trip.exception.InvalidBoardRequestException;
+import com.ssafy.trip.exception.MaliciousAccessException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @Getter
 @NoArgsConstructor
@@ -18,7 +20,8 @@ public class BoardCreateRequestDto {
         setSubject(subject);
     }
 
-    public void setUserId(String userId) { //앞단에서 검사할 것이므로 따로 유효성 로직을 넣지 않는다.
+    public void setUserId(String userId) { //악의적인 형태. Malicious로 exception 처리
+        if(userId==null || userId.trim().length()==0) throw new MaliciousAccessException();
         this.userId = userId;
     }
 

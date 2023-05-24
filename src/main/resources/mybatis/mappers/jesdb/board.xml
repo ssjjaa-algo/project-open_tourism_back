@@ -18,7 +18,7 @@
     </update>
     <delete id="deleteBoard">
         DELETE FROM board
-        WHERE articleno = #{articleno}
+        WHERE articleno = #{articleno} AND user_id=#{userId}
     </delete>
     <select id="getSimpleInfoBoardList" resultType="board">
         select articleno, user_id as userId, subject, hit,
@@ -37,6 +37,6 @@
             hit,
             regtime
         FROM board
-        WHERE articleno=#{articleno}
+        WHERE articleno=#{articleno} AND user_id=#{userId}
     </select>
 </mapper>

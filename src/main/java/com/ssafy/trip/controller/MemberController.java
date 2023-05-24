@@ -61,12 +61,15 @@ public class MemberController {
                 );
                 HttpSession session = request.getSession(true);
                 session.setAttribute("userId",member.getUserId());
-                Cookie cookie = new Cookie("userId",member.getUserId());
-                cookie.setPath("/");
-                Cookie cookie2 = new Cookie("userName",member.getUserName());
-                cookie2.setPath("/");
-                response.addCookie(cookie);
-                response.addCookie(cookie2);
+
+                Cookie userIdCookie = new Cookie("userId",member.getUserId());
+                userIdCookie.setPath("/");
+                response.addCookie(userIdCookie);
+
+                Cookie userNameCookie = new Cookie("userName",member.getUserName());
+                userNameCookie.setPath("/");
+                response.addCookie(userNameCookie);
+
                 return ResponseEntity.ok("success");
             }
         } catch(MaliciousAccessException e) {
