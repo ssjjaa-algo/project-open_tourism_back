@@ -66,6 +66,7 @@ public class MemberController {
                 cookie.setPath("/");
                 response.addCookie(cookie);
                 Cookie cookie2 = new Cookie("userName",member.getUserName());
+                cookie2.setPath("/");
                 response.addCookie(cookie2);
                 return new ResponseEntity<>(memberLoginResponseDto, HttpStatus.OK);
             }
