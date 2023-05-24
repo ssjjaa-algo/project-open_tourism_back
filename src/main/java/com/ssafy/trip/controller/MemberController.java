@@ -48,14 +48,13 @@ public class MemberController {
         return ResponseEntity.ok().build();
     }
     @PostMapping("/login")
-    public ResponseEntity<MemberLoginResponseDto> login(HttpServletRequest request,
+    public ResponseEntity<String> login(HttpServletRequest request,
                                         HttpServletResponse response,
                                         @RequestBody MemberLoginRequestDto memberLoginRequestDto) {
 
         try {
             Member member = memberService.login(memberLoginRequestDto.getUserId(),memberLoginRequestDto.getUserPwd());
 
-            System.out.println(member.getUserId() + " " +member.getUserName());
             if (member != null) {
                 MemberLoginResponseDto memberLoginResponseDto = new MemberLoginResponseDto(
                         member.getUserId(),member.getUserName()
@@ -64,13 +63,17 @@ public class MemberController {
                 session.setAttribute("userId",member.getUserId());
                 Cookie cookie = new Cookie("userId",member.getUserId());
                 cookie.setPath("/");
+                Cookie cookie2 = new Cookie("userName",member.getUserName());
+                cookie2.setPath("/");
                 response.addCookie(cookie);
-                return new ResponseEntity<>(memberLoginResponseDto, HttpStatus.OK);
+                response.addCookie(cookie2);
+                return ResponseEntity.ok("success");
             }
         } catch(MaliciousAccessException e) {
             throw new MaliciousAccessException();
         }
-        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
+        return ResponseEntity.ok("fail");
     }
 
     @GetMapping("logout")
@@ -78,6 +81,7 @@ public class MemberController {
         HttpSession session = request.getSession(false);
 
         if (session != null) {
+            System.out.println(session.getId());
             session.invalidate();
             return ResponseEntity.ok().build();
         }
