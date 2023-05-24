@@ -75,7 +75,6 @@ public class MemberService {
     public Member login(String userId, String userPwd) {
 
         String salt = memberSecDAO.getSalt(userId);
-        System.out.println(salt);
         if (salt == null) return null;
 
         String encPw = DataUtil.getEncrypt(userPwd,salt);
