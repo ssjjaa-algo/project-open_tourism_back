@@ -51,4 +51,6 @@ public class BoardController {
         }
         return ResponseEntity.ok("OK");
     }
+
+
 }

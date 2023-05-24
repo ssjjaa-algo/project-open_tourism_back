@@ -76,7 +76,7 @@ public class MemberController {
         return ResponseEntity.ok("fail");
     }
 
-    @GetMapping("logout")
+    @PostMapping("logout")
     public ResponseEntity<String> logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
 
