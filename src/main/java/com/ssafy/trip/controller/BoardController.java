@@ -30,6 +30,7 @@ public class BoardController {
             HttpServletRequest request
             ) {
         HttpSession session = request.getSession(false);
+
         return ResponseEntity.ok().body(boardService.selectBoard(articleno,
                 (String)session.getAttribute("userId")));
     }
@@ -40,13 +41,20 @@ public class BoardController {
     }
 
     @PostMapping("/insert")
-    public ResponseEntity<String> createBoard(@RequestBody BoardCreateRequestDto createBoardRequestDto) {
+    public ResponseEntity<String> createBoard(@RequestBody BoardCreateRequestDto createBoardRequestDto,
+                                                HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        System.out.println(createBoardRequestDto.getUserId());
+        createBoardRequestDto.setUserId((String)session.getAttribute("userId"));
         boardService.createBoard(createBoardRequestDto);
         return ResponseEntity.ok("OK");
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<String> updateBoard(@RequestBody BoardUpdateRequestDto updateBoardRequestDto) {
+    public ResponseEntity<String> updateBoard(@RequestBody BoardUpdateRequestDto updateBoardRequestDto,
+                                              HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        updateBoardRequestDto.setUserId((String)session.getAttribute("userId"));
         boardService.updateBoard(updateBoardRequestDto);
         return ResponseEntity.ok("OK");
     }
