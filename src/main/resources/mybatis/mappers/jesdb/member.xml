@@ -19,6 +19,21 @@
         from member where user_id = #{userId} and user_pwd = #{userPwd};
     </select>
 
+    <select id="findById" parameterType="String" resultType="member">
+        select user_id as userId,
+               user_name as userName,
+               user_pwd as userPwd,
+               user_email as userEmail,
+               count_fail as countFail,
+               refresh_token as refreshToken
+        from member where user_id = #{userId};
+    </select>
+
+    <update id="update" parameterType="String">
+        UPDATE member SET user_pwd = #{userPwd} WHERE user_id = #{userId};
+
+    </update>
+
     <select id="duplicateId" parameterType="String" resultType="String">
         select user_id
         from member where user_id = #{userId};

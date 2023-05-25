@@ -21,4 +21,8 @@ public interface MemberDAO {
     String duplicateEmail(String userEmail) throws DataAccessException;
 
     Member login(@Param("userId") String userId, @Param("userPwd")String userPwd) throws DataAccessException;
+
+    Member findById(String userId) throws DataAccessException;
+
+    void update(String userId, String userPwd) throws DataAccessException;
 }

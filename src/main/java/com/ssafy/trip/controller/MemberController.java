@@ -80,6 +80,40 @@ public class MemberController {
         return ResponseEntity.ok("fail");
     }
 
+    @PostMapping("/checkpwd")
+    public ResponseEntity<String> modify(HttpServletRequest request,
+                                        HttpServletResponse response,
+                                        @RequestBody MemberLoginRequestDto memberLoginRequestDto) {
+        System.out.println("checkpwd");
+        try {
+            Member member = memberService.login(memberLoginRequestDto.getUserId(),memberLoginRequestDto.getUserPwd());
+
+            if (member != null) {
+                return ResponseEntity.ok("success");
+            }
+        } catch(MaliciousAccessException e) {
+            throw new MaliciousAccessException();
+        }
+
+        return ResponseEntity.ok("fail");
+    }
+
+    @PostMapping("/modify")
+    public ResponseEntity<String> modify(HttpServletRequest request,
+                                         HttpServletResponse response,
+                                         @RequestBody MemberModifyInfoRequestDto memberModifyInfoRequestDto) {
+        System.out.println("modifyInfo");
+        try {
+            memberService.modifyInfo(memberModifyInfoRequestDto.getUserId(),memberModifyInfoRequestDto.getUserPwd());
+
+        } catch(MaliciousAccessException e) {
+            throw new MaliciousAccessException();
+        }
+
+        // System.out.println("성공을반환합니다.");
+        return ResponseEntity.ok("success");
+    }
+
     @PostMapping("logout")
     public ResponseEntity<String> logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);

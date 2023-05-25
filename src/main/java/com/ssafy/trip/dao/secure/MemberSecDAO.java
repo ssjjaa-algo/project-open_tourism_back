@@ -12,4 +12,5 @@ public interface MemberSecDAO {
     String getSalt(String userId) throws DataAccessException;
 
 
+    void update(String userId, String salt) throws DataAccessException;
 }
