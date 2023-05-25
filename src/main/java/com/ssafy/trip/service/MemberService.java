@@ -22,6 +22,7 @@ public class MemberService {
         this.memberSecDAO = memberSecDAO;
     }
 
+    @Transactional
     public void regist(Member member, String pwd) {
         String salt = DataUtil.getSalt();
         String encPw = DataUtil.getEncrypt(pwd,salt);
