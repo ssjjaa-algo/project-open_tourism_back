@@ -1,10 +1,6 @@
 package com.ssafy.trip.controller;
 
-import com.ssafy.trip.exception.BusinessException;
-import com.ssafy.trip.exception.ErrorResponse;
-import com.ssafy.trip.exception.MaliciousAccessException;
-import lombok.extern.log4j.Log4j2;
-import com.ssafy.trip.exception.GlobalException;
+import com.ssafy.trip.exception.*;
 import org.springframework.boot.context.properties.bind.BindException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,15 +10,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import java.nio.file.AccessDeniedException;
-
 @RestControllerAdvice
 public class GlobalControllerAdvice {
 
     /**
-     *  javax.validation.Valid or @Validated 으로 binding error 발생시 발생한다.
-     *  HttpMessageConverter 에서 등록한 HttpMessageConverter binding 못할경우 발생
-     *  주로 @RequestBody, @RequestPart 어노테이션에서 발생
+     * javax.validation.Valid or @Validated 으로 binding error 발생시 발생한다.
+     * HttpMessageConverter 에서 등록한 HttpMessageConverter binding 못할경우 발생
+     * 주로 @RequestBody, @RequestPart 어노테이션에서 발생
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
@@ -55,9 +49,14 @@ public class GlobalControllerAdvice {
         return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.METHOD_NOT_ALLOWED);
     }
 
+    @ExceptionHandler(TooManyRequestException.class)
+    protected ResponseEntity<ErrorResponse> handleTooManyRequestException(TooManyRequestException e) {
+        return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.TOO_MANY_REQUESTS);
+    }
+
     @ExceptionHandler(MaliciousAccessException.class)
     protected ResponseEntity<ErrorResponse> handleMaliciousAccessException(MaliciousAccessException e) {
-        return new ResponseEntity<>(new ErrorResponse(e.getMessage()),HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(BusinessException.class)
@@ -74,8 +73,6 @@ public class GlobalControllerAdvice {
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<ErrorResponse> handleException(Exception e) {
         e.printStackTrace();
-       
         return new ResponseEntity<>(new ErrorResponse("서버 내부에서 에러 발생"), HttpStatus.INTERNAL_SERVER_ERROR);
-
     }
 }
