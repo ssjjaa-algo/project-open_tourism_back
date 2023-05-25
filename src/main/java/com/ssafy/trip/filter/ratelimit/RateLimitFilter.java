@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 public class RateLimitFilter implements Filter {
-    private static final int MAX_BUCKET_SIZE = 6;
+    private static final int MAX_BUCKET_SIZE = 100;
     private LoadingCache<String, Bucket> bucketMap;
 
     @Override
@@ -39,11 +39,11 @@ public class RateLimitFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String ip = getClientIpAddr(request);
         Bucket bucket = bucketMap.getIfPresent(ip);
-        System.out.println("filter");
 
         //1. bucket==null이면 새롭게 count
         if (bucket == null) {
             bucketMap.put(ip, new Bucket(MAX_BUCKET_SIZE - 1, System.currentTimeMillis())); //10:02
+            filterChain.doFilter(servletRequest,servletResponse);
             return;
         }
 
@@ -63,6 +63,7 @@ public class RateLimitFilter implements Filter {
         bucket.setCount(bucketCount - 1); //9
         bucket.setLastAccess(currentTime);
         bucketMap.put(ip, bucket); //담는다.
+        filterChain.doFilter(servletRequest,servletResponse);
     }
 
 
