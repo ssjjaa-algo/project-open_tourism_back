@@ -1,10 +1,7 @@
 package com.ssafy.trip.controller;
 
-import com.ssafy.trip.exception.BusinessException;
-import com.ssafy.trip.exception.ErrorResponse;
-import com.ssafy.trip.exception.MaliciousAccessException;
+import com.ssafy.trip.exception.*;
 import lombok.extern.log4j.Log4j2;
-import com.ssafy.trip.exception.GlobalException;
 import org.springframework.boot.context.properties.bind.BindException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +43,10 @@ public class GlobalControllerAdvice {
     protected ResponseEntity<ErrorResponse> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
         return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
     }
-
+    @ExceptionHandler(TooManyRequestException.class)
+    protected ResponseEntity<ErrorResponse> handleTooManyRequestException(TooManyRequestException e) {
+        return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.TOO_MANY_REQUESTS);
+    }
     /**
      * 지원하지 않은 HTTP method 호출 할 경우 발생
      */
