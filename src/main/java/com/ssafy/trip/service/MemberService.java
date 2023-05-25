@@ -83,4 +83,24 @@ public class MemberService {
 
         return memberDAO.login(userId,encPw); // 해당 pw를 가진 member 찾으러 가지
     }
+
+    public void modifyInfo(String userId, String userPwd) {
+        String salt = DataUtil.getSalt();
+        String encPw = DataUtil.getEncrypt(userPwd,salt);
+
+        Member member = memberDAO.findById(userId);
+        System.out.println("modifyInfo Service 에서 반환" + member.getUserId());
+        System.out.println("member 이전 비밀번호 = " + member.getUserPwd());
+        member.setUserPwd(encPw); //
+        System.out.println("member 이후 비밀번호 = " + member.getUserPwd());
+        try {
+            memberDAO.update(member.getUserId(),encPw); // 비번 넣어주고
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.println("현재 저장되있는 salt 확인 : " + memberSecDAO.getSalt(member.getUserId()));
+        memberSecDAO.update(member.getUserId(),salt);
+        System.out.println("이후 저장되있는 salt 확인 : " + memberSecDAO.getSalt(member.getUserId()));
+
+    }
 }

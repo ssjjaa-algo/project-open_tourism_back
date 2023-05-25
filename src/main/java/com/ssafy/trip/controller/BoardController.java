@@ -65,4 +65,6 @@ public class BoardController {
         boardService.deleteBoard(articleno, (String)session.getAttribute("userId"));
         return ResponseEntity.ok("OK");
     }
+
+
 }
