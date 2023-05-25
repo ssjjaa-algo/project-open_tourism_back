@@ -45,7 +45,7 @@ public class SALTDB_Config {
         return new SqlSessionTemplate(saltdbSqlSessionFactory);
     }
     @Bean("saltTransactionManager")
-    public DataSourceTransactionManager jesTransactionManager(@Qualifier("saltdbDataSource")DataSource dataSource) {
+    public DataSourceTransactionManager saltTransactionManager(@Qualifier("saltdbDataSource")DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 }
