@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.trip.dao.trip.BoardDAO">
+    <insert id="createBoard" parameterType="boardCreateRequestDto"
+        useGeneratedKeys="true">
+        INSERT INTO board(user_id, subject, content)
+        VALUES (#{userId}, #{subject}, #{content})
+    </insert>
+    <update id="updateBoard" parameterType="boardUpdateRequestDto"
+            useGeneratedKeys="true">
+        UPDATE board
+        SET subject=#{subject},
+            content=#{content}
+        WHERE user_id=#{userId} AND articleno = #{articleno}
+    </update>
+    <delete id="deleteBoard">
+        DELETE FROM board
+        WHERE articleno = #{articleno} AND user_id=#{userId}
+    </delete>
+    <select id="getSimpleInfoBoardList" resultType="board">
+        select articleno, user_id as userId, subject, hit,
+               case when date_format(regtime, '%Y%m%d') = date_format(now(), '%Y%m%d')
+                        then date_format(regtime, '%H:%i:%s')
+                    else date_format(regtime, '%y.%m.%d')
+                   end regtime
+        from board
+    </select>
+    <select id="getBoardDetailInfo" resultType="board">
+        select
+            articleno,
+            user_id as userId,
+            subject,
+            content,
+            hit,
+            regtime
+        FROM board
+        WHERE articleno=#{articleno} AND user_id=#{userId}
+    </select>
+</mapper>
