@@ -21,8 +21,8 @@
 - XSS 스크립트 방어
 
 ## 개발 언어
-
 - JAVA
+    - Springboot 프레임워크 이용
 - MYSQL
 
 ## 사용 툴
